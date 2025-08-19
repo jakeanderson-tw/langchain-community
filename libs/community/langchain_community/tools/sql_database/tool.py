@@ -31,6 +31,7 @@ class BaseSQLDatabaseTool(BaseModel):
 
 class _QuerySQLDatabaseToolInput(BaseModel):
     query: str = Field(..., description="A detailed and correct SQL query.")
+    include_columns: bool = Field(..., description="Whether to include column names in the result.")
 
 
 class QuerySQLDatabaseTool(BaseSQLDatabaseTool, BaseTool):
@@ -54,9 +55,10 @@ class QuerySQLDatabaseTool(BaseSQLDatabaseTool, BaseTool):
         self,
         query: str,
         run_manager: Optional[CallbackManagerForToolRun] = None,
+        include_columns: bool = False
     ) -> Union[str, Sequence[Dict[str, Any]], Result]:
         """Execute the query, return the results or an error message."""
-        return self.db.run_no_throw(query)
+        return self.db.run_no_throw(query, include_columns=include_columns)
 
 
 @deprecated(
