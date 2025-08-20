@@ -31,7 +31,7 @@ class BaseSQLDatabaseTool(BaseModel):
 
 class _QuerySQLDatabaseToolInput(BaseModel):
     query: str = Field(..., description="A detailed and correct SQL query.")
-    include_columns: bool = Field(..., description="Whether to include column names in the result.")
+    include_columns: bool = Field(default=False, description="Whether to include column names in the result.")
 
 
 class QuerySQLDatabaseTool(BaseSQLDatabaseTool, BaseTool):
